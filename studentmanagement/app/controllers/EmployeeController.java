@@ -79,8 +79,6 @@ public class EmployeeController extends Controller {
         PreparedStatement statement1 = connection.prepareStatement("insert into employee_details (name,dob,address,phno,gender,email,ibu,designation,experience) values(?,?,?,?,?,?,?,?,?)");
         statement1.setString(1,jsonData);
         statement1.executeUpdate();
-
-//        JSONPObject object = new
         return ok(jsonData);
     }
 }
