@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -13,7 +12,9 @@ import play.api.db.Database;
 import play.data.FormFactory;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.*;
 import service.EmployeeService;
 
 import javax.inject.Inject;
@@ -52,36 +53,62 @@ public class EmployeeController extends Controller {
             String email = resultSet.getString("email");
             String gender = resultSet.getString("gender");
             String phno = resultSet.getString("phno");
-            result.add(JsonNodeFactory.instance.objectNode().put("id", id).put("name", name).put("email",email).put("gender",gender).put("phno",phno));
+            result.add(JsonNodeFactory.instance.objectNode().put("id", id).put("name", name).put("email", email).put("gender", gender).put("phno", phno));
         }
         return ok(result);
     }
+
     public Result getById(int id) throws SQLException {
         Connection connection = db.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("select * from employee_details where id =?");
-        preparedStatement.setInt(1,id);
-        ResultSet resultSet  = preparedStatement.executeQuery();
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
         ObjectNode result = Json.newObject();
-        while ((resultSet.next())){
+        while ((resultSet.next())) {
             int empid = resultSet.getInt("id");
             String empName = resultSet.getString("name");
             String empmail = resultSet.getString("email");
             String gender = resultSet.getString("gender");
-            result.put("id",id);
-            result.put("name",empName);
-            result.put("email",empmail);
-            result.put("gender",gender);
+            result.put("id", id);
+            result.put("name", empName);
+            result.put("email", empmail);
+            result.put("gender", gender);
         }
         return ok(result);
     }
-    public Result addEmployee(String jsonData) throws SQLException {
+
+    public Result addEmployee(Http.Request request) throws SQLException {
+        JsonNode json = request.body().asJson();
+        String name = json.get("name").asText();
+        String gender = json.get("gender").asText();
+        String address = json.get("address").asText();
         Connection connection = db.getConnection();
-        PreparedStatement statement1 = connection.prepareStatement("insert into employee_details (name,email,gender,phno) values(?,?,?,?)");
-        statement1.setString(1,jsonData);
+        PreparedStatement statement1 = connection.prepareStatement("insert into employee_details (name,gender,email) values(?,?,?)");
+        statement1.setString(1, name);
+        statement1.setString(2, gender);
+        statement1.setString(3, address);
         statement1.executeUpdate();
-        return ok(jsonData);
+        return ok("Data Inserted");
     }
 }
+//    JsonNode json = request.body().asJson();
+//    ArrayNode arrayNode = (ArrayNode) json;
+//    Connection connection = db.getConnection();
+//    PreparedStatement statement1 = connection.prepareStatement("insert into employee_details (name,gender,email) values(?,?,?)");
+//    for (int i=0; i< arrayNode.size();i++){
+//        JsonNode jsonNode = arrayNode.get(i);
+//        MyData myData = Json.fromJson(json, MyData.class);
+//        statement1.setString(1,myData.jsonData);
+//        statement1.addBatch();
+//        statement1.executeUpdate();
+//    }
+////    statement1.setString(1,myData.jsonData);
+////    statement1.executeUpdate();
+//    return ok("Data Inserted");
+//}
+
+
+//}
 
 
 //    public Result addEmployee(Http.Request employee) {
