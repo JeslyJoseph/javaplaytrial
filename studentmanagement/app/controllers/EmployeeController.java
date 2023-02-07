@@ -76,7 +76,7 @@ public class EmployeeController extends Controller {
     }
     public Result addEmployee(String jsonData) throws SQLException {
         Connection connection = db.getConnection();
-        PreparedStatement statement1 = connection.prepareStatement("insert into employee_details (name,dob,address,phno,gender,email,ibu,designation,experience) values(?,?,?,?,?,?,?,?,?)");
+        PreparedStatement statement1 = connection.prepareStatement("insert into employee_details (name,email,gender,phno) values(?,?,?,?)");
         statement1.setString(1,jsonData);
         statement1.executeUpdate();
         return ok(jsonData);

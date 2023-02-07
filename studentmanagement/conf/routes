@@ -12,4 +12,4 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET       /getEmployee                    controllers.EmployeeController.getEmployee()
 #GET      /connection                     controllers.EmployeeController.connection()
 GET       /getById/:id                    controllers.EmployeeController.getById(id :Integer)
-#POST      /addEmployee                    controllers.EmployeeController.addEmployee(jsonData: JSON)
+POST      /addEmployee                    controllers.EmployeeController.addEmployee(jsonData: String)
