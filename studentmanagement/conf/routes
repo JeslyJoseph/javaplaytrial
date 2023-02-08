@@ -12,5 +12,11 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET       /getEmployee                    controllers.EmployeeController.getEmployee()
 #GET      /connection                     controllers.EmployeeController.connection()
 GET       /getById/:id                    controllers.EmployeeController.getById(id :Integer)
-#POST      /addEmployee                    controllers.EmployeeController.addEmployee(jsonData: String)
 POST      /addEmployee                    controllers.EmployeeController.addEmployee(request :Request)
+POST      /updateEmployee                 controllers.EmployeeController.updateEmployee(request : Request)
+DELETE     /deleteEmployee/:id            controllers.EmployeeController.deleteEmployee(id :Integer)
+
+POST    /api/elasticsearch/:index         controllers.EmployeeEsController.createIndex(index: String)
+POST    /api/elasticsearch/:index/:id     controllers.EmployeeEsController.addDocument(index: String,request : Request, id: String)
+
+
