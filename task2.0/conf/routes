@@ -7,4 +7,9 @@ GET     /                           controllers.HomeController.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
-GET     /connection                  controllers.EmployeeController.connection()
+GET     /addData                 controllers.EmployeeController.addData()
+GET      /getData                     controllers.EmployeeController.getData()
+GET    /addCountry                      controllers.CountryController.addCountry()
+POST    /addDocument/:employee/:id                controllers.EmployeeController.addDocument(Request: play.mvc.Http.Request,employee:String,id:String)
+GET     /getById/:id                      controllers.CountryController.getById(id :Integer)
+GET     /getCountry                     controllers.CountryController.getCountry()
