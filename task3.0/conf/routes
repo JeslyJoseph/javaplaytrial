@@ -12,3 +12,5 @@ POST    /addData               controllers.VehicleController.addData(request :Re
 GET  /getProductById/:id     controllers.VehicleController.getProductById(id :String)
 
 GET  /getBySpecId/:specid     controllers.VehicleController.getBySpecId(specid :String)
+POST   /addDataIntoSql   controllers.VehicleController.addDataIntoSql(request: Request)
+GET     /getById/:id                      controllers.VehicleController.getById(id :Integer)
