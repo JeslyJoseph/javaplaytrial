@@ -33,6 +33,7 @@ public class VehicleController {
         vehicleService.addDataIntoSql(request);
         return ok("Data Inserted");
     }
+
     public Result getById(int id) throws SQLException {
         String result = vehicleService.getById(id);
         return ok(result);
